@@ -62,3 +62,14 @@ INSTALLED_APPS = [
     'user'
 ]
 ```
+Model 생성/수정 후
+
+생성/수정한 모델을 바탕으로 DB의 틀이 되는 class 를 생성/수정한다.
+```
+$ python3 manage.py makemigrations
+```
+INSTALLED_APPS 에 있는 앱들이 사용하는 테이블을 생성하여 준다.
+```
+$ python3 manage.py migrate
+```
+./community/settings.py 의 DATABASES 에서 어떤 DB 를 사용할 것인지 고를 수 있다. default 는 sqlite3
