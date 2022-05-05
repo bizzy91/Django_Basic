@@ -41,6 +41,10 @@ $ pip3 install django
 $ django-admin startproject [프로젝트 이름]
 $ django-admin startproject community 
 ```
+Django 실행하기
+```
+./community $ python3 manage.py runserver
+```
 앱 만들기
 프로젝트 경로로 들어 간 뒤 아래 명령어 입력
 ```
@@ -66,10 +70,30 @@ Model 생성/수정 후
 
 생성/수정한 모델을 바탕으로 DB의 틀이 되는 class 를 생성/수정한다.
 ```
-$ python3 manage.py makemigrations
+./community $ python3 manage.py makemigrations
 ```
 INSTALLED_APPS 에 있는 앱들이 사용하는 테이블을 생성하여 준다.
 ```
-$ python3 manage.py migrate
+./community $ python3 manage.py migrate
 ```
 ./community/settings.py 의 DATABASES 에서 어떤 DB 를 사용할 것인지 고를 수 있다. default 는 sqlite3
+
+Super User 만들기
+```
+./community $ python3 manage.py createsuperuser
+```
+
+/admin 페이지에 나타나는 내용 관리하기 (./[앱 이름]/admin.py)
+```
+from django.contrib import admin
+# models.py 에서 생성한 객체 가져온다.
+from .models import Fcuser
+
+# Register your models here.
+class FcuserAdmin(admin.ModelAdmin):
+    # 표시할 형태 tuple 로 선언한다.
+    list_display = ('username', 'password')
+
+# /admin 페이지에 등록한다.
+admin.site.register(Fcuser, FcuserAdmin)
+```

@@ -20,6 +20,7 @@ class Fcuser(models.Model):
         verbose_name='등록시간',
     )
 
+    # Fcuser.__str__ 의 반환값으로 Fcuser.username 을 사용한다. -> /admin 에서 보여지는 값을 변경한다.
     def __str__(self):
         return self.username
     
@@ -28,4 +29,5 @@ class Fcuser(models.Model):
         # Table 이름
         db_table = 'user'
         verbose_name = '사용자'
+        # Django 는 기본적으로 verbose_name 을 복수형으로 보여준다. 
         verbose_name_plural = '사용자'
