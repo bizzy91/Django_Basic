@@ -54,7 +54,7 @@ $ django-admin startapp board
 $ django-admin startapp user
 ```
 앱을 만든 후 ./community/setting.py 에 추가한다.
-```
+```Python
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -84,7 +84,7 @@ Super User 만들기
 ```
 
 /admin 페이지에 나타나는 내용 관리하기 (./[앱 이름]/admin.py)
-```
+```Python
 from django.contrib import admin
 # models.py 에서 생성한 객체 가져온다.
 from .models import Fcuser
@@ -96,4 +96,36 @@ class FcuserAdmin(admin.ModelAdmin):
 
 # /admin 페이지에 등록한다.
 admin.site.register(Fcuser, FcuserAdmin)
+```
+
+view.py 에서 render() 함수로 ***.html 파일을 렌더링할 때 기본적으로 ./[앱 이름]/templates 경로를 바라본다.
+```Python
+def home(request):
+    return render(request, 'home.html')
+```
+
+./[앱 이름]/url.py 를 만들어 ./[앱 이름] 이후의 end-point를 관리할 수 있다.
+```Python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('register/', views.register),
+    path('login/', views.login),
+    path('logout/', views.logout),
+]
+```
+
+include 함수를 이용하여 작성한 내용을 추가한다. (./community/url.py)
+```Python
+from django.urls import path, include
+from user.views import home
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('user/', include('user.urls')),
+    path('board/', include('board.urls')),
+    path('', home),
+]
 ```
